@@ -47,3 +47,14 @@ func Victoire(grille [6][7]string, joueur string) {
 		}
 	}
 }
+
+func MatchNul(grille [6][7]string) bool {
+	var plein bool
+	plein = true
+	for j := 0; j < 7; j++ {
+		if grille[0][j] == "" {
+			plein = false
+		}
+	}
+	return plein
+}
