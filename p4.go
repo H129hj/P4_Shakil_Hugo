@@ -12,3 +12,11 @@ func InitP4() {
 	var gagnant bool
 	gagnant = false
 }
+
+func AffichageGrille(grille [6][7]string) {
+	for i := 0; i < 6; i++ {
+        for j := 0; j < 7; j++ {
+            grille[i][j] = "."
+        }
+    }
+}
