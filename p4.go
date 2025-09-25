@@ -63,3 +63,14 @@ func Tourjoueur(tour *int, grille *[6][7]string, colonne int, joueur string) {
 		return 
 	}
 }
+
+func MatchNul(grille [6][7]string) bool {
+	var plein bool
+	plein = true
+	for j := 0; j < 7; j++ {
+		if grille[0][j] == "" {
+			plein = false
+		}
+	}
+	return plein
+}
