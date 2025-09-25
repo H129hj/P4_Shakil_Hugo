@@ -13,10 +13,20 @@ func InitP4() {
 
 func AffichageGrille(grille [6][7]string) {
 	for i := 0; i < 6; i++ {
-        for j := 0; j < 7; j++ {
-            grille[i][j] = "."
-        }
-    }
+		for j := 0; j < 7; j++ {
+			grille[i][j] = "."
+		}
+	}
+}
+
+func AjoutPion(grille *[6][7]string, colonne int, joueur string) bool {
+	for i := 5; i >= 0; i-- {
+		if grille[i][colonne] == "" {
+			grille[i][colonne] = joueur
+			return true
+		}
+	}
+	return false
 }
 
 func Victoire(grille [6][7]string, joueur string) {
