@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func InitP4() {
 	var grille [6][7]string
 	var joueur1, joueur2 string
@@ -45,5 +47,19 @@ func Victoire(grille [6][7]string, joueur string) {
 				gagnant = true
 			}
 		}
+	}
+}
+
+func Tourjoueur(tour *int, grille *[6][7]string, colonne int, joueur string) {
+	if AjoutPion(grille, colonne, joueur) {
+		*tour++
+		if *tour%2 == 0 {
+			fmt.Println("C'est au tour du joueur 2 (O)")
+		} else {
+			fmt.Println("C'est au tour du joueur 1 (X)")
+		}
+	} else {
+		fmt.Println("Colonne pleine, choisissez une autre colonne")
+		return 
 	}
 }
