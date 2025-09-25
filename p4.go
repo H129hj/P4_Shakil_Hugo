@@ -12,3 +12,13 @@ func InitP4() {
 	var gagnant bool
 	gagnant = false
 }
+
+func AjoutPion(grille *[6][7]string, colonne int, joueur string) bool {
+	for i := 5; i >= 0; i-- {
+		if grille[i][colonne] == "" {
+			grille[i][colonne] = joueur
+			return true
+		}
+	}
+	return false
+}
