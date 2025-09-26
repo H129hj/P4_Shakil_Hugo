@@ -1,24 +1,28 @@
 package main
 
-import "fmt"
-
-func InitP4() {
-	var grille [6][7]string
-	var joueur1, joueur2 string
-	joueur1 = "X"
-	joueur2 = "O"
-	var tour int
-	tour = 0
-	var colonne int
-	var ligne int
-}
+import (
+	"fmt"
+	"io"
+)
 
 func AffichageGrille(grille [6][7]string) {
+	fmt.Println("+---------------+")
 	for i := 0; i < 6; i++ {
+		fmt.Print("|")
 		for j := 0; j < 7; j++ {
-			grille[i][j] = "."
+			cell := grille[i][j]
+			if cell == "" {
+				cell = "."
+			}
+			fmt.Print(cell)
+			if j < 6 {
+				fmt.Print(" ")
+			}
 		}
+		fmt.Println("|")
 	}
+	fmt.Println("+---------------+")
+	fmt.Println(" 1 2 3 4 5 6 7")
 }
 
 func AjoutPion(grille *[6][7]string, colonne int, joueur string) bool {
@@ -31,28 +35,27 @@ func AjoutPion(grille *[6][7]string, colonne int, joueur string) bool {
 	return false
 }
 
-func Victoire(grille [6][7]string, joueur string) {
-	var gagnant bool
-	gagnant = false
+func Victoire(grille [6][7]string, joueur string) bool {
 	for i := 0; i < 6; i++ {
 		for j := 0; j < 4; j++ {
 			if grille[i][j] == joueur && grille[i][j+1] == joueur && grille[i][j+2] == joueur && grille[i][j+3] == joueur {
-				gagnant = true
+				return true
 			}
 		}
 	}
 	for j := 0; j < 7; j++ {
 		for i := 0; i < 3; i++ {
 			if grille[i][j] == joueur && grille[i+1][j] == joueur && grille[i+2][j] == joueur && grille[i+3][j] == joueur {
-				gagnant = true
+				return true
 			}
 		}
 	}
+	return false
 }
 
 func Tourjoueur(tour *int, grille *[6][7]string, colonne int, joueur string) {
 	if AjoutPion(grille, colonne, joueur) {
-		*tour++
+		(*tour)++
 		if *tour%2 == 0 {
 			fmt.Println("C'est au tour du joueur 2 (O)")
 		} else {
@@ -60,7 +63,7 @@ func Tourjoueur(tour *int, grille *[6][7]string, colonne int, joueur string) {
 		}
 	} else {
 		fmt.Println("Colonne pleine, choisissez une autre colonne")
-		return 
+		return
 	}
 }
 
@@ -73,4 +76,63 @@ func MatchNul(grille [6][7]string) bool {
 		}
 	}
 	return plein
+}
+
+func main() {
+	var grille [6][7]string
+	joueurActuel := "X"
+	tour := 0
+
+	fmt.Println("Bienvenue dans Puissance 4 !")
+
+	for {
+		AffichageGrille(grille)
+		fmt.Printf("Joueur %s, choisissez une colonne (1-7, 0 pour quitter): ", joueurActuel)
+
+		var inputCol int
+		if _, err := fmt.Scan(&inputCol); err != nil {
+			if err == io.EOF {
+				fmt.Println("Entrée terminée. Au revoir !")
+				break
+			}
+			fmt.Println("Entrée invalide. Veuillez saisir un nombre entre 0 et 7.")
+			continue
+		}
+
+		if inputCol == 0 {
+			fmt.Println("Vous avez quitté la partie.")
+			break
+		}
+
+		if inputCol < 1 || inputCol > 7 {
+			fmt.Println("Colonne invalide. Choisissez entre 1 et 7.")
+			continue
+		}
+
+		colIndex := inputCol - 1
+		if !AjoutPion(&grille, colIndex, joueurActuel) {
+			fmt.Println("Cette colonne est pleine. Choisissez une autre.")
+			continue
+		}
+
+		tour++
+
+		if Victoire(grille, joueurActuel) {
+			AffichageGrille(grille)
+			fmt.Printf("Le joueur %s a gagné !\n", joueurActuel)
+			break
+		}
+
+		if MatchNul(grille) {
+			AffichageGrille(grille)
+			fmt.Println("Match nul !")
+			break
+		}
+
+		if joueurActuel == "X" {
+			joueurActuel = "O"
+		} else {
+			joueurActuel = "X"
+		}
+	}
 }
