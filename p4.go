@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
 )
 
 func AffichageGrille(grille [6][7]string) {
@@ -90,14 +89,7 @@ func main() {
 		fmt.Printf("Joueur %s, choisissez une colonne (1-7, 0 pour quitter): ", joueurActuel)
 
 		var inputCol int
-		if _, err := fmt.Scan(&inputCol); err != nil {
-			if err == io.EOF {
-				fmt.Println("Entrée terminée. Au revoir !")
-				break
-			}
-			fmt.Println("Entrée invalide. Veuillez saisir un nombre entre 0 et 7.")
-			continue
-		}
+		fmt.Scan(&inputCol)
 
 		if inputCol == 0 {
 			fmt.Println("Vous avez quitté la partie.")
@@ -119,7 +111,11 @@ func main() {
 
 		if Victoire(grille, joueurActuel) {
 			AffichageGrille(grille)
-			fmt.Printf("Le joueur %s a gagné !\n", joueurActuel)
+			if joueurActuel == "X" {
+				fmt.Println("Le joueur 1 (X) a gagné !")
+			} else {
+				fmt.Println("Le joueur 2 (O) a gagné !")
+			}
 			break
 		}
 
