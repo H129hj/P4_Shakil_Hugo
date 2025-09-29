@@ -111,17 +111,12 @@ func main() {
 
 		if Victoire(grille, joueurActuel) {
 			AffichageGrille(grille)
-<<<<<<< HEAD
-			fmt.Printf("Le joueur %s a gagné !\n", joueurActuel)
-			main()
-=======
 			if joueurActuel == "X" {
 				fmt.Println("Le joueur 1 (X) a gagné !")
 			} else {
 				fmt.Println("Le joueur 2 (O) a gagné !")
 			}
 			break
->>>>>>> 973e45a54edf10adbcd28bf8cdb1d7cb69d39d1d
 		}
 
 		if MatchNul(grille) {
