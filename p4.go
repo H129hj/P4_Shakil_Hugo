@@ -6,7 +6,7 @@ import (
 )
 
 func AffichageGrille(grille [6][7]string) {
-	fmt.Println("+---------------+")
+	fmt.Println("+--------------+")
 	for i := 0; i < 6; i++ {
 		fmt.Print("|")
 		for j := 0; j < 7; j++ {
@@ -21,7 +21,7 @@ func AffichageGrille(grille [6][7]string) {
 		}
 		fmt.Println("|")
 	}
-	fmt.Println("+---------------+")
+	fmt.Println("+--------------+")
 	fmt.Println(" 1 2 3 4 5 6 7")
 }
 
@@ -120,7 +120,7 @@ func main() {
 		if Victoire(grille, joueurActuel) {
 			AffichageGrille(grille)
 			fmt.Printf("Le joueur %s a gagné !\n", joueurActuel)
-			break
+			main()
 		}
 
 		if MatchNul(grille) {
